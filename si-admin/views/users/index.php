@@ -130,7 +130,7 @@
                     }
 
                     $.ajax({
-                        url: "http://localhost/website_portofolio_rizky/si-admin/api/users/create.php",
+                        url: "http://localhost/web-porto/si-admin/api/users/create.php",
                         method: "POST",
                         data: JSON.stringify(formData),
                         success: function(data) {
@@ -156,7 +156,7 @@
                     }
 
                     $.ajax({
-                        url: "http://localhost/website_portofolio_rizky/si-admin/api/users/update.php",
+                        url: "http://localhost/web-porto/si-admin/api/users/update.php",
                         method: "PUT",
                         data: JSON.stringify(formData),
                         success: function(data) {
@@ -178,7 +178,7 @@
             $.ajax({
                 type: "GET",
                 contentType: "application/json",
-                url: "http://localhost/website_portofolio_rizky/si-admin/api/users/read.php",
+                url: "http://localhost/web-porto/si-admin/api/users/read.php",
                 success: function(response) {
                     // console.log(response);
                     var json = response.body;
@@ -231,7 +231,7 @@
             $.ajax({
                 type: "GET",
                 contentType: "application/json",
-                url: "http://localhost/website_portofolio_rizky/si-admin/api/users/read.php?id=" + id,
+                url: "http://localhost/web-porto/si-admin/api/users/read.php?id=" + id,
                 success: function(response) {
                     $('#id').val(response.id);
                     $('#nama_lengkap').val(response.nama_lengkap);
@@ -250,7 +250,7 @@
         function deleteOne(id) {
             alert('Yakin untuk hapus data ?');
             $.ajax({
-                url: "http://localhost/website_portofolio_rizky/si-admin/api/users/delete.php",
+                url: "http://localhost/web-porto/si-admin/api/users/delete.php",
                 method: "DELETE",
                 data: JSON.stringify({
                     "id": id
