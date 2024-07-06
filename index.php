@@ -160,9 +160,7 @@
           <div class="row">
             <div class="col col-sm-9">SKILLS</div>
             <div class="col col-sm-3">
-              <button type="button" id="add_data" class="btn btn-primary btn-sm float-end">
-                Add
-              </button>
+              <button type="button" id="add_data" class="btn btn-primary btn-sm float-end"><i class="bi bi-plus-lg"></i>ADD</button>
             </div>
           </div>
         </div>
@@ -361,10 +359,10 @@
               description: json[i].description,
               action: '<button onclick="showOne(' +
                 json[i].id +
-                ')" class="btn btn-sm btn-warning">Edit</button>' +
+                ')" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i>Edit</button>' +
                 '<button onclick="deleteOne(' +
                 json[i].id +
-                ')" class="btn btn-sm btn-danger mx-2">Delete</button>',
+                ')" class="btn btn-sm btn-danger mx-2"> <i class="bi bi-trash3"></i>Delete</button>',
             };
             dataSet.push(sub_array);
           }
