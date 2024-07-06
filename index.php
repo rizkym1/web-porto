@@ -59,7 +59,7 @@
   <!-- Jumbotron -->
   <section class="jumbotron text-center">
     <div class="container" data-aos="zoom-in-up">
-      <img src="img/rizky.jpg" alt="rizky" width="200" class="rounded-circle img-thumbnail" />
+      <img src="img/saya_sendiri.jpg" alt="rizky" width="200" class="rounded-circle img-thumbnail" />
       <h3 class="mt-3">I'm</h3>
       <h1 id="nama_lengkap" class="display-4">Rizky Maulana</h1>
       <!-- tentukan ID dengan nama  -->
@@ -154,13 +154,13 @@
   <section id="skill">
     <div class="container">
       <div id="message"></div>
-      <h1 class="mt-4 mb-4 text-center text-danger">USERS CRUD</h1>
+      <h1 class="mt-4 mb-4 text-center text">SKILLS CRUD</h1>
       <div class="card">
         <div class="card-header">
           <div class="row">
             <div class="col col-sm-9">SKILLS</div>
             <div class="col col-sm-3">
-              <button type="button" id="add_data" class="btn btn-success btn-sm float-end">
+              <button type="button" id="add_data" class="btn btn-primary btn-sm float-end">
                 Add
               </button>
             </div>
@@ -361,10 +361,10 @@
               description: json[i].description,
               action: '<button onclick="showOne(' +
                 json[i].id +
-                ')" class="btn btn-sm btn-primary">Edit</button>' +
+                ')" class="btn btn-sm btn-warning">Edit</button>' +
                 '<button onclick="deleteOne(' +
                 json[i].id +
-                ')" class="btn btn-sm btn-danger mx-3">Delete</button>',
+                ')" class="btn btn-sm btn-danger mx-2">Delete</button>',
             };
             dataSet.push(sub_array);
           }
@@ -420,26 +420,27 @@
     }
 
     function deleteOne(id) {
-      alert("Yakin untuk hapus data ?");
-      $.ajax({
-        url: "http://localhost/web-porto/si-admin/api/skills/delete.php",
-        method: "DELETE",
-        data: JSON.stringify({
-          id: id,
-        }),
-        success: function(data) {
-          $("#action_button").attr("disabled", false);
-          $("#message").html(
-            '<div class="alert alert-success">' + data + "</div>"
-          );
-          $("#action_modal").modal("hide");
-          $("#sample_data").DataTable().destroy();
-          showAll();
-        },
-        error: function(err) {
-          console.log(err);
-        },
-      });
+      var konfirmasiUser = confirm("Yakin untuk hapus data ?");
+      if (konfirmasiUser) {
+        $.ajax({
+          url: "http://localhost/web-porto/si-admin/api/skills/delete.php",
+          method: "DELETE",
+          data: JSON.stringify({
+            id: id,
+          }),
+          success: function(data) {
+            $("#action_button").attr("disabled", false);
+            $("#message").html('<div class="alert alert-success">' + data + "</div>");
+            $("#action_modal").modal("hide");
+            $("#sample_data").DataTable().destroy();
+            showAll();
+          },
+          error: function(err) {
+            console.log(err);
+            $("#message").html('<div class="alert alert-danger">' + err.responseJSON + '</div>');
+          },
+        });
+      }
     }
 
     $(document).ready(function() {

@@ -176,7 +176,7 @@
                             'rating': json[i].rating,
                             'description': json[i].description,
                             'action': '<button onclick="showOne(' + json[i].id + ')" class="btn btn-sm btn-warning">Edit</button>' +
-                                '<button onclick="deleteOne(' + json[i].id + ')" class="btn btn-sm btn-danger">Delete</button>'
+                                '<button onclick="deleteOne(' + json[i].id + ')" class="btn btn-sm btn-danger mx-2">Delete</button>'
                         };
                         dataSet.push(sub_array);
                     }
@@ -232,24 +232,27 @@
         }
 
         function deleteOne(id) {
-            alert('Yakin untuk hapus data ?');
-            $.ajax({
-                url: "http://localhost/web-porto/si-admin/api/skills/delete.php",
-                method: "DELETE",
-                data: JSON.stringify({
-                    "id": id
-                }),
-                success: function(data) {
-                    $('#action_button').attr('disabled', false);
-                    $('#message').html('<div class="alert alert-success">' + data + '</div>');
-                    $('#action_modal').modal('hide');
-                    $('#sample_data').DataTable().destroy();
-                    showAll();
-                },
-                error: function(err) {
-                    console.log(err);
-                }
-            });
+            var konfirmasiUser = confirm("Yakin untuk hapus data ?");
+            if (konfirmasiUser) {
+                $.ajax({
+                    url: "http://localhost/web-porto/si-admin/api/skills/delete.php",
+                    method: "DELETE",
+                    data: JSON.stringify({
+                        id: id,
+                    }),
+                    success: function(data) {
+                        $("#action_button").attr("disabled", false);
+                        $("#message").html('<div class="alert alert-success">' + data + "</div>");
+                        $("#action_modal").modal("hide");
+                        $("#sample_data").DataTable().destroy();
+                        showAll();
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        $("#message").html('<div class="alert alert-danger">' + err.responseJSON + '</div>');
+                    },
+                });
+            }
         }
     </script>
 </body>
