@@ -58,7 +58,7 @@ class Skills
         user_id,
         skill_name,
         rating,
-        description,      
+        description      
         FROM
         " . $this->db_table . "
         WHERE
@@ -79,10 +79,10 @@ class Skills
         $sqlQuery = "UPDATE
         " . $this->db_table . "
         SET
-        user_id = :user_id,
+        user_id           = :user_id,
         skill_name        = :skill_name,
-        rating     = :rating,
-        description         = :description
+        rating            = :rating,
+        description       = :description
         WHERE
         id = :id";
         $stmt = $this->conn->prepare($sqlQuery);

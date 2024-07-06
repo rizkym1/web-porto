@@ -28,7 +28,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col col-sm-9">USERS</div>
+                    <div class="col col-sm-9">SKILLS</div>
                     <div class="col col-sm-3">
                         <button type="button" id="add_data" class="btn btn-success btn-sm float-end">Add</button>
                     </div>
@@ -72,8 +72,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Rating</label>
-                                <input type="Rating" name="Rating" id="Rating" class="form-control" />
-                                <span id="Rating_error" class="text-danger"></span>
+                                <input type="rating" name="rating" id="rating" class="form-control" />
+                                <span id="rating_error" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Description</label>
@@ -111,16 +111,14 @@
                 event.preventDefault();
                 if ($('#action').val() == "Add") {
                     var formData = {
-                        'nama_lengkap': $('#nama_lengkap').val(),
-                        'email': $('#email').val(),
-                        'password': $('#password').val(),
-                        'pekerjaan': $('#pekerjaan').val(),
-                        'posisi': $('#posisi').val(),
-                        'foto': $('#foto').val()
+                        'user_id': $('#user_id').val(),
+                        'skill_name': $('#skill_name').val(),
+                        'rating': $('#rating').val(),
+                        'description': $('#description').val()
                     }
 
                     $.ajax({
-                        url: "http://localhost/web-porto/si-admin/api/users/create.php",
+                        url: "http://localhost/web-porto/si-admin/api/skills/create.php",
                         method: "POST",
                         data: JSON.stringify(formData),
                         success: function(data) {
@@ -137,16 +135,14 @@
                 } else if ($('#action').val() == "Update") {
                     var formData = {
                         'id': $('#id').val(),
-                        'nama_lengkap': $('#nama_lengkap').val(),
-                        'email': $('#email').val(),
-                        'password': $('#password').val(),
-                        'pekerjaan': $('#pekerjaan').val(),
-                        'posisi': $('#posisi').val(),
-                        'foto': $('#foto').val()
+                        'user_id': $('#user_id').val(),
+                        'skill_name': $('#skill_name').val(),
+                        'rating': $('#rating').val(),
+                        'description': $('#description').val()
                     }
 
                     $.ajax({
-                        url: "http://localhost/web-porto/si-admin/api/users/update.php",
+                        url: "http://localhost/web-porto/si-admin/api/skills/update.php",
                         method: "PUT",
                         data: JSON.stringify(formData),
                         success: function(data) {
@@ -221,15 +217,13 @@
             $.ajax({
                 type: "GET",
                 contentType: "application/json",
-                url: "http://localhost/web-porto/si-admin/api/users/read.php?id=" + id,
+                url: "http://localhost/web-porto/si-admin/api/skills/read.php?id=" + id,
                 success: function(response) {
                     $('#id').val(response.id);
-                    $('#nama_lengkap').val(response.nama_lengkap);
-                    $('#email').val(response.email);
-                    $('#password').val(response.password);
-                    $('#pekerjaan').val(response.pekerjaan);
-                    $('#posisi').val(response.posisi);
-                    $('#foto').val(response.foto);
+                    $('#user_id').val(response.user_id);
+                    $('#skill_name').val(response.skill_name);
+                    $('#rating').val(response.rating);
+                    $('#description').val(response.description);
                 },
                 error: function(err) {
                     console.log(err);
@@ -240,7 +234,7 @@
         function deleteOne(id) {
             alert('Yakin untuk hapus data ?');
             $.ajax({
-                url: "http://localhost/web-porto/si-admin/api/users/delete.php",
+                url: "http://localhost/web-porto/si-admin/api/skills/delete.php",
                 method: "DELETE",
                 data: JSON.stringify({
                     "id": id

@@ -15,7 +15,7 @@ $item->skill_name = $data->skill_name;
 $item->rating = $data->rating;
 $item->description = $data->description;
 if ($item->createUser()) {
-    echo json_encode('User created successfully.');
+    echo json_encode(["message" => 'User created successfully.']);
 } else {
     echo json_encode('User could not be created.');
 }
