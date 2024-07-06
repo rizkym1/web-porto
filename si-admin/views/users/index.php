@@ -1,7 +1,7 @@
 <?php
 // session_start();
 // if (!isset($_SESSION['user'])) {
-//     return header('Location: http://localhost:81/konterku/views/login/' );
+//     return header('Location: http://localhost/web-porto/si-admin/views/Login/');
 // }
 ?>
 <!doctype html>
@@ -221,7 +221,7 @@
         }
 
         function showOne(id) {
-            $('#dynamic_modal_title').text('Edit Data');
+            $('#dynamic_modal_title').text('Edit Biodata User');
             $('#sample_form')[0].reset();
             $('#action').val('Update');
             $('#action_button').text('Update');

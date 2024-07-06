@@ -22,7 +22,7 @@ $item->pekerjaan = $data->pekerjaan;
 $item->posisi = $data->posisi;
 
 if ($item->updateUser()) {
-    echo json_encode("User data updated.");
+    echo json_encode(["message" => "User data updated."]);
 } else {
     echo json_encode("Data could not be updated");
 }
