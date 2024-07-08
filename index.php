@@ -46,10 +46,10 @@
             <a class="nav-link" href="#projects">Projects</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#contact">Contanct</a>
+            <a class="nav-link" href="#skills">Skills</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#skill">Skill</a>
+            <a class="nav-link" href="#contact">Contact</a>
           </li>
         </ul>
       </div>
@@ -57,13 +57,13 @@
   </nav>
   <!-- End Navbar -->
   <!-- Jumbotron -->
-  <section class="jumbotron text-center">
+  <section class="jumbotron text-center" style="background-color: #e6d5f5;">
     <div class="container" data-aos="zoom-in-up">
       <img src="img/saya_sendiri.jpg" alt="rizky" width="200" class="rounded-circle img-thumbnail" />
       <h3 class="mt-3">I'm</h3>
-      <h1 id="nama_lengkap" class="display-4">Rizky Maulana</h1>
+      <h1 id="nama_lengkap" class="display-4"></h1>
       <!-- tentukan ID dengan nama  -->
-      <p id="pekerjaan" class="lead">Mahasiswa | Web Develover</p>
+      <p id="pekerjaan" class="lead"></p>
     </div>
 
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -151,7 +151,7 @@
   <!-- End Projects -->
 
   <!-- tabel -->
-  <section id="skill">
+  <section id="skills">
     <div class="container">
       <div id="message"></div>
       <h1 class="mt-4 mb-4 text-center text">SKILLS CRUD</h1>

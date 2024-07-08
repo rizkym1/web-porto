@@ -6,8 +6,11 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-AllowHeaders, Authorization, X-Requested-With");
 include_once '../../config/database.php';
 include_once '../../models/Users.php';
-session_start();
-
+// session_start();
+// if (!isset($_SESSION['user'])) {
+//     http_response_code(404);
+//     echo json_encode("You are not log in.");
+//     return false;
 
 $database = new Database();
 $db = $database->getConnection();
@@ -33,12 +36,6 @@ if (isset($_GET['id'])) {
         echo json_encode("User not found.");
     }
 } else {
-    if (!isset($_SESSION['user'])) {
-        http_response_code(404);
-        echo json_encode("You are not log in.");
-        return false;
-    }
-
     $items = new Users($db);
     $stmt = $items->getUsers();
     $itemCount = $stmt->rowCount();
