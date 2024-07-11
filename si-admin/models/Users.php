@@ -7,12 +7,12 @@ class Users
     private $db_table = "users";
     // Columns
     public $id;
-    public $nama_lengkap;
+    public $full_name;
     public $email;
     public $password;
-    public $foto;
-    public $pekerjaan;
-    public $posisi;
+    public $photo;
+    public $job;
+    public $expected_position;
     // Db connection
     public function __construct($db)
     {
@@ -21,7 +21,7 @@ class Users
     // GET ALL
     public function getUsers()
     {
-        $sqlQuery = "SELECT id, nama_lengkap, email, password, foto, pekerjaan, posisi FROM " . $this->db_table . "";
+        $sqlQuery = "SELECT id, full_name, email, password, photo, job, expected_position FROM " . $this->db_table . "";
         $stmt = $this->conn->prepare($sqlQuery); //untuk mengkoneksikan dan eksekusi query
         $stmt->execute();
         return $stmt;
@@ -31,27 +31,27 @@ class Users
     {
         $sqlQuery = "INSERT INTO " . $this->db_table . "
         SET
-        nama_lengkap = :nama_lengkap,
+        full_name = :full_name,
         email        = :email,
         password     = :password,
-        foto         = :foto,
-        pekerjaan    = :pekerjaan,
-        posisi       = :posisi";
+        photo         = :photo,
+        job    = :job,
+        expected_position       = :expected_position";
         $stmt = $this->conn->prepare($sqlQuery);
         // sanitize
-        $this->nama_lengkap = htmlspecialchars(strip_tags($this->nama_lengkap));
+        $this->full_name = htmlspecialchars(strip_tags($this->full_name));
         $this->email        = htmlspecialchars(strip_tags($this->email));
         $this->password     = htmlspecialchars(strip_tags($this->password));
-        $this->foto         = htmlspecialchars(strip_tags($this->foto));
-        $this->pekerjaan    = htmlspecialchars(strip_tags($this->pekerjaan));
-        $this->posisi       = htmlspecialchars(strip_tags($this->posisi));
+        $this->photo         = htmlspecialchars(strip_tags($this->photo));
+        $this->job    = htmlspecialchars(strip_tags($this->job));
+        $this->expected_position       = htmlspecialchars(strip_tags($this->expected_position));
         // bind data
-        $stmt->bindParam(":nama_lengkap", $this->nama_lengkap);
+        $stmt->bindParam(":full_name", $this->full_name);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":password", $this->password);
-        $stmt->bindParam(":foto", $this->foto);
-        $stmt->bindParam(":pekerjaan", $this->pekerjaan);
-        $stmt->bindParam(":posisi", $this->posisi);
+        $stmt->bindParam(":photo", $this->photo);
+        $stmt->bindParam(":job", $this->job);
+        $stmt->bindParam(":expected_position", $this->expected_position);
 
         if ($stmt->execute()) {
             return true;
@@ -63,12 +63,12 @@ class Users
     {
         $sqlQuery = "SELECT
         id,
-        nama_lengkap,
+        full_name,
         email,
         password,
-        foto,
-        pekerjaan,
-        posisi        
+        photo,
+        job,
+        expected_position        
         FROM
         " . $this->db_table . "
         WHERE
@@ -78,12 +78,12 @@ class Users
         $stmt->bindParam(1, $this->id);
         $stmt->execute();
         $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
-        $this->nama_lengkap = $dataRow['nama_lengkap'];
+        $this->full_name = $dataRow['full_name'];
         $this->email        = $dataRow['email'];
         $this->password     = $dataRow['password'];
-        $this->foto         = $dataRow['foto'];
-        $this->pekerjaan    = $dataRow['pekerjaan'];
-        $this->posisi       = $dataRow['posisi'];
+        $this->photo         = $dataRow['photo'];
+        $this->job    = $dataRow['job'];
+        $this->expected_position       = $dataRow['expected_position'];
     }
     // UPDATE
     public function updateUser()
@@ -91,30 +91,30 @@ class Users
         $sqlQuery = "UPDATE
         " . $this->db_table . "
         SET
-        nama_lengkap = :nama_lengkap,
+        full_name = :full_name,
         email        = :email,
         password     = :password,
-        foto         = :foto,
-        pekerjaan    = :pekerjaan,
-        posisi       = :posisi
+        photo         = :photo,
+        job    = :job,
+        expected_position       = :expected_position
         WHERE
         id = :id";
         $stmt = $this->conn->prepare($sqlQuery);
 
-        $this->nama_lengkap = htmlspecialchars(strip_tags($this->nama_lengkap));
+        $this->full_name = htmlspecialchars(strip_tags($this->full_name));
         $this->email        = htmlspecialchars(strip_tags($this->email));
         $this->password     = htmlspecialchars(strip_tags($this->password));
-        $this->foto         = htmlspecialchars(strip_tags($this->foto));
-        $this->pekerjaan    = htmlspecialchars(strip_tags($this->pekerjaan));
-        $this->posisi       = htmlspecialchars(strip_tags($this->posisi));
+        $this->photo         = htmlspecialchars(strip_tags($this->photo));
+        $this->job    = htmlspecialchars(strip_tags($this->job));
+        $this->expected_position       = htmlspecialchars(strip_tags($this->expected_position));
         $this->id           = htmlspecialchars(strip_tags($this->id));
         // bind data
-        $stmt->bindParam(":nama_lengkap", $this->nama_lengkap);
+        $stmt->bindParam(":full_name", $this->full_name);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":password", $this->password);
-        $stmt->bindParam(":foto", $this->foto);
-        $stmt->bindParam(":pekerjaan", $this->pekerjaan);
-        $stmt->bindParam(":posisi", $this->posisi);
+        $stmt->bindParam(":photo", $this->photo);
+        $stmt->bindParam(":job", $this->job);
+        $stmt->bindParam(":expected_position", $this->expected_position);
         $stmt->bindParam(":id", $this->id);
         $stmt->fetchAll();
 
@@ -146,12 +146,12 @@ class Users
     {
         $sqlQuery = "SELECT
         id,
-        nama_lengkap,
+        full_name,
         email,
         password,
-        foto,
-        pekerjaan,
-        posisi 
+        photo,
+        job,
+        expected_position 
         FROM
         " . $this->db_table . "
         WHERE

@@ -95,6 +95,18 @@
         </div>
       </div>
     </div>
+    <!-- Skills Progress Bars -->
+    <div class="container mt-5">
+      <h2 class="text text-center mb-4">Kemampuan Yang Di Kuasai</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-6" id="skills-column-1">
+          <!-- Skills Progress Bars Column 1 -->
+        </div>
+        <div class="col-md-6" id="skills-column-2">
+          <!-- Skills Progress Bars Column 2 -->
+        </div>
+      </div>
+    </div>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
       <path fill="#e6d5f5" fill-opacity="1" d="M0,160L48,181.3C96,203,192,245,288,266.7C384,288,480,288,576,245.3C672,203,768,117,864,106.7C960,96,1056,160,1152,197.3C1248,235,1344,245,1392,250.7L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
     </svg>
@@ -277,7 +289,7 @@
       showAll();
 
       $("#add_data").click(function() {
-        $("#dynamic_modal_title").text("Add Biodata User");
+        $("#dynamic_modal_title").text("Add Biodata Skill");
         $("#sample_form")[0].reset();
         $("#action").val("Add");
         $("#action_button").text("Add");
@@ -393,7 +405,7 @@
     }
 
     function showOne(id) {
-      $("#dynamic_modal_title").text("Edit Biodata User");
+      $("#dynamic_modal_title").text("Edit Biodata Skill");
       $("#sample_form")[0].reset();
       $("#action").val("Update");
       $("#action_button").text("Update");
@@ -448,7 +460,7 @@
         $.ajax({
           type: "GET",
           contentType: "application/json",
-          url: "http://localhost/web-porto/si-admin/api/users/read.php?id=1",
+          url: "http://localhost/web-porto/si-admin/api/users/read.php?id=17",
           success: function(response) {
             $("#nama_lengkap").text(response.nama_lengkap); //mengubah elemen dengan .text dan .html
             $("#pekerjaan").text(
@@ -458,6 +470,69 @@
           error: function(err) {},
         });
       }
+    });
+    $(document).ready(function() {
+      // fungsi untuk mengambil data and menampilkan skills diprogress bars
+      function fetchSkills() {
+        $.ajax({
+          type: "GET",
+          url: "http://localhost/web-porto/si-admin/api/skills/read.php",
+          success: function(response) {
+            const skills = response.body;
+            let skillsHtmlColumn1 = '';
+            let skillsHtmlColumn2 = '';
+
+            skills.forEach((skill, index) => {
+              const skillHtml = `
+            <div class="mb-3">
+              <h6>${skill.skill_name}</h6>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: ${skill.rating}%" aria-valuenow="${skill.rating}" aria-valuemin="0" aria-valuemax="100">${skill.rating}%</div>
+              </div>
+            </div>`;
+
+              if (index % 2 === 0) {
+                skillsHtmlColumn1 += skillHtml;
+              } else {
+                skillsHtmlColumn2 += skillHtml;
+              }
+            });
+
+            $('#skills-column-1').html(skillsHtmlColumn1);
+            $('#skills-column-2').html(skillsHtmlColumn2);
+          },
+          error: function(err) {
+            console.error('Error fetching skills:', err);
+          }
+        });
+      }
+
+      fetchSkills();
+      // fungsi mengambil data user_id ,skill_name dan rating dari Skills
+      function showAll() {
+        $.ajax({
+          type: "GET",
+          contentType: "application/json",
+          url: "http://localhost/web-porto/si-admin/api/skills/read.php?id=1",
+          success: function(response) {
+            var json = response.body;
+            var dataSet = [];
+            for (var i = 0; i < json.length; i++) {
+              var sub_array = {
+                user_id: json[i].user_id,
+                skill_name: json[i].skill_name,
+                rating: json[i].rating,
+              };
+              dataSet.push(sub_array);
+            }
+
+          },
+          error: function(err) {
+            console.log(err);
+          },
+        });
+      }
+      showAll();
     });
   </script>
 

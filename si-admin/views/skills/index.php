@@ -10,6 +10,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
     <title>Users - Web Porto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
@@ -171,38 +174,42 @@
                     var dataSet = [];
                     for (var i = 0; i < json.length; i++) {
                         var sub_array = {
-                            'user_id': json[i].user_id,
-                            'skill_name': json[i].skill_name,
-                            'rating': json[i].rating,
-                            'description': json[i].description,
-                            'action': '<button onclick="showOne(' + json[i].id + ')" class="btn btn-sm btn-warning">Edit</button>' +
-                                '<button onclick="deleteOne(' + json[i].id + ')" class="btn btn-sm btn-danger mx-2">Delete</button>'
+                            user_id: json[i].user_id,
+                            skill_name: json[i].skill_name,
+                            rating: json[i].rating,
+                            description: json[i].description,
+                            action: '<button onclick="showOne(' +
+                                json[i].id +
+                                ')" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i>Edit</button>' +
+                                '<button onclick="deleteOne(' +
+                                json[i].id +
+                                ')" class="btn btn-sm btn-danger mx-2"> <i class="bi bi-trash3"></i>Delete</button>',
                         };
                         dataSet.push(sub_array);
                     }
-                    $('#sample_data').DataTable({
+                    $("#sample_data").DataTable({
                         data: dataSet,
                         columns: [{
-                                data: "user_id"
+                                data: "user_id",
                             },
                             {
-                                data: "skill_name"
+                                data: "skill_name",
                             },
                             {
-                                data: "rating"
+                                data: "rating",
                             },
                             {
-                                data: "description"
+                                data: "description",
                             },
                             {
-                                data: "action"
-                            }
-                        ]
+                                data: "action",
+                            },
+                        ],
                     });
                 },
                 error: function(err) {
                     console.log(err);
-                }
+                },
             });
         }
 

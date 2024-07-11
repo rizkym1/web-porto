@@ -18,16 +18,16 @@ if (isset($_GET['id'])) {
     $item = new Users($db);
     $item->id = isset($_GET['id']) ? $_GET['id'] : die();
     $item->getSingleUser();
-    if ($item->nama_lengkap != null) {
+    if ($item->full_name != null) {
         // create array
         $emp_arr = array(
             "id"           => $item->id,
-            "nama_lengkap" => $item->nama_lengkap,
+            "full_name" => $item->full_name,
             "email"        => $item->email,
             "password"     => $item->password,
-            "foto"         => $item->foto,
-            "pekerjaan"    => $item->pekerjaan,
-            "posisi"       => $item->posisi,
+            "photo"         => $item->photo,
+            "job"    => $item->job,
+            "expected_position"       => $item->expected_position,
         );
         http_response_code(200);
         echo json_encode($emp_arr);
@@ -47,12 +47,12 @@ if (isset($_GET['id'])) {
             extract($row);
             $e = array(
                 "id"           => $id,
-                "nama_lengkap" => $nama_lengkap,
+                "full_name" => $full_name,
                 "email"        => $email,
                 "password"     => $password,
-                "foto"         => $foto,
-                "pekerjaan"    => $pekerjaan,
-                "posisi"       => $posisi,
+                "photo"         => $photo,
+                "job"    => $job,
+                "expected_position"       => $expected_position,
             );
             array_push($UserArr["body"], $e);
         }

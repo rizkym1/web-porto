@@ -10,6 +10,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
     <title>Users - Web Porto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
@@ -39,10 +42,10 @@
                     <table class="table table-striped table-bordered" id="sample_data">
                         <thead>
                             <tr>
-                                <th>Nama Lengkap</th>
+                                <th>Full Name</th>
                                 <th>Email</th>
-                                <th>Pekerjaan</th>
-                                <th>Posisi</th>
+                                <th>Job</th>
+                                <th>Expected Position</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -61,9 +64,9 @@
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label class="form-label">Nama Lengkap</label>
-                                <input type="text" name="nama_lengkap" id="nama_lengkap" class="form-control" />
-                                <span id="nama_lengkap_error" class="text-danger"></span>
+                                <label class="form-label">Full Name</label>
+                                <input type="text" name="full_name" id="full_name" class="form-control" />
+                                <span id="full_name_error" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
@@ -76,19 +79,19 @@
                                 <span id="password_error" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Pekerjaan</label>
-                                <input type="text" name="pekerjaan" id="pekerjaan" class="form-control" />
-                                <span id="pekerjaan_error" class="text-danger"></span>
+                                <label class="form-label">Job</label>
+                                <input type="text" name="job" id="job" class="form-control" />
+                                <span id="job_error" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Posisi</label>
-                                <input type="text" name="posisi" id="posisi" class="form-control" />
-                                <span id="posisi_error" class="text-danger"></span>
+                                <label class="form-label">Expected Position</label>
+                                <input type="text" name="expected_position" id="expected_position" class="form-control" />
+                                <span id="expected_position_error" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Foto</label>
-                                <input type="text" name="foto" id="foto" class="form-control" />
-                                <span id="foto_error" class="text-danger"></span>
+                                <label class="form-label">Photo</label>
+                                <input type="text" name="photo" id="photo" class="form-control" />
+                                <span id="photo_error" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -121,12 +124,12 @@
                 event.preventDefault();
                 if ($('#action').val() == "Add") {
                     var formData = {
-                        'nama_lengkap': $('#nama_lengkap').val(),
+                        'full_name': $('#full_name').val(),
                         'email': $('#email').val(),
                         'password': $('#password').val(),
-                        'pekerjaan': $('#pekerjaan').val(),
-                        'posisi': $('#posisi').val(),
-                        'foto': $('#foto').val()
+                        'job': $('#job').val(),
+                        'expected_position': $('#expected_position').val(),
+                        'photo': $('#photo').val()
                     }
 
                     $.ajax({
@@ -147,12 +150,12 @@
                 } else if ($('#action').val() == "Update") {
                     var formData = {
                         'id': $('#id').val(),
-                        'nama_lengkap': $('#nama_lengkap').val(),
+                        'full_name': $('#full_name').val(),
                         'email': $('#email').val(),
                         'password': $('#password').val(),
-                        'pekerjaan': $('#pekerjaan').val(),
-                        'posisi': $('#posisi').val(),
-                        'foto': $('#foto').val()
+                        'job': $('#job').val(),
+                        'expected_position': $('#expected_position').val(),
+                        'photo': $('#photo').val()
                     }
 
                     $.ajax({
@@ -185,28 +188,28 @@
                     var dataSet = [];
                     for (var i = 0; i < json.length; i++) {
                         var sub_array = {
-                            'nama_lengkap': json[i].nama_lengkap,
+                            'full_name': json[i].full_name,
                             'email': json[i].email,
-                            'pekerjaan': json[i].pekerjaan,
-                            'posisi': json[i].posisi,
-                            'action': '<button onclick="showOne(' + json[i].id + ')" class="btn btn-sm btn-warning">Edit</button>' +
-                                '<button onclick="deleteOne(' + json[i].id + ')" class="btn btn-sm btn-danger">Delete</button>'
+                            'job': json[i].job,
+                            'expected_position': json[i].expected_position,
+                            'action': '<button onclick="showOne(' + json[i].id + ')" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square"></i>Edit</button>' +
+                                '<button onclick="deleteOne(' + json[i].id + ')" class="btn btn-sm btn-danger mx-3"><i class="bi bi-trash3"></i>Delete</button>'
                         };
                         dataSet.push(sub_array);
                     }
                     $('#sample_data').DataTable({
                         data: dataSet,
                         columns: [{
-                                data: "nama_lengkap"
+                                data: "full_name"
                             },
                             {
                                 data: "email"
                             },
                             {
-                                data: "pekerjaan"
+                                data: "job"
                             },
                             {
-                                data: "posisi"
+                                data: "expected_position"
                             },
                             {
                                 data: "action"
@@ -234,12 +237,12 @@
                 url: "http://localhost/web-porto/si-admin/api/users/read.php?id=" + id,
                 success: function(response) {
                     $('#id').val(response.id);
-                    $('#nama_lengkap').val(response.nama_lengkap);
+                    $('#full_name').val(response.full_name);
                     $('#email').val(response.email);
                     $('#password').val(response.password);
-                    $('#pekerjaan').val(response.pekerjaan);
-                    $('#posisi').val(response.posisi);
-                    $('#foto').val(response.foto);
+                    $('#job').val(response.job);
+                    $('#expected_position').val(response.expected_position);
+                    $('#photo').val(response.photo);
                 },
                 error: function(err) {
                     console.log(err);
