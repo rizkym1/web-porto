@@ -16,9 +16,9 @@ $item->email = $data->email;
 $item->password = $data->password;
 
 if ($item->prosesLogin()) {
-
   $data = $item->prosesLogin();
   $_SESSION['user'] = $data;
+  $_SESSION['user_id'] = $data['id']; // Menyimpan ID pengguna di sesi
   http_response_code(200);
   echo json_encode($_SESSION['user']);
 } else {

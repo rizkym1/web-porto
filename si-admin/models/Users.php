@@ -178,4 +178,10 @@ class Users
         session_destroy();
         return true;
     }
+
+    public function isUserLoggedIn()
+    {
+        session_start();
+        return isset($_SESSION['user']);
+    }
 }

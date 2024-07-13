@@ -3,18 +3,28 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-AllowHeaders, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+// Include necessary files
 include_once '../../config/database.php';
 include_once '../../models/Users.php';
 
+// Initialize Database and User object
 $database = new Database();
 $db = $database->getConnection();
-$item = new Users($db);
+$user = new Users($db);
 
-if ($item->prosesLogout()) {
+// Process logout
+if ($user->prosesLogout()) {
+    // Logout successful
     http_response_code(200);
-    echo json_encode("You have successfully logout");
+    echo json_encode("You have successfully logged out.");
+
+    // Redirect to homepage
+    header("Location: https://rizkym.amisbudi.cloud/web-porto/si-admin/views/Login/");
+    exit();
 } else {
-    http_response_code(404);
-    echo json_encode("Server Error");
+    // Logout failed
+    http_response_code(500);
+    echo json_encode("Unable to logout. Please try again later.");
 }

@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+  return header('Location: https://rizkym.amisbudi.cloud/web-porto/si-admin/views/Login/');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +36,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark shadow fixed-top" style="background-color: #8a2be2">
     <div class="container">
-      <a class="navbar-brand fw-bold" style="font-family: 'Roboto', sans-serif" href="index.html">My Portofolio</a>
+      <a class="navbar-brand fw-bold" style="font-family: 'Roboto', sans-serif" href="index.php">My Portofolio</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -51,6 +57,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#contact">Contact</a>
           </li>
+          <li class="navbar-nav ms-auto nav-kanan fw-bold">
+            <a class="nav-link text-white" href="https://rizkym.amisbudi.cloud/web-porto/si-admin/api/auth/logout.php">Log Out</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -61,9 +70,9 @@
     <div class="container" data-aos="zoom-in-up">
       <img src="img/saya_sendiri.jpg" alt="rizky" width="200" class="rounded-circle img-thumbnail" />
       <h3 class="mt-3">I'm</h3>
-      <h1 id="nama_lengkap" class="display-4"></h1>
+      <h1 id="full_name" class="display-4"></h1>
       <!-- tentukan ID dengan nama  -->
-      <p id="pekerjaan" class="lead"></p>
+      <p id="job" class="lead"></p>
     </div>
 
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -308,7 +317,7 @@
           };
 
           $.ajax({
-            url: "http://localhost/web-porto/si-admin/api/skills/create.php",
+            url: "https://rizkym.amisbudi.cloud/web-porto/si-admin/api/skills/create.php",
             method: "POST",
             data: JSON.stringify(formData),
             success: function(data) {
@@ -334,7 +343,7 @@
           };
 
           $.ajax({
-            url: "http://localhost/web-porto/si-admin/api/skills/update.php",
+            url: "https://rizkym.amisbudi.cloud/web-porto/si-admin/api/skills/update.php",
             method: "PUT",
             data: JSON.stringify(formData),
             success: function(data) {
@@ -358,7 +367,7 @@
       $.ajax({
         type: "GET",
         contentType: "application/json",
-        url: "http://localhost/web-porto/si-admin/api/skills/read.php",
+        url: "https://rizkym.amisbudi.cloud/web-porto/si-admin/api/skills/read.php",
         success: function(response) {
           // console.log(response);
           var json = response.body;
@@ -415,7 +424,7 @@
       $.ajax({
         type: "GET",
         contentType: "application/json",
-        url: "http://localhost/web-porto/si-admin/api/skills/read.php?id=" + id,
+        url: "https://rizkym.amisbudi.cloud/web-porto/si-admin/api/skills/read.php?id=" + id,
         success: function(response) {
           $("#id").val(response.id);
           $("#user_id").val(response.user_id);
@@ -433,7 +442,7 @@
       var konfirmasiUser = confirm("Yakin untuk hapus data ?");
       if (konfirmasiUser) {
         $.ajax({
-          url: "http://localhost/web-porto/si-admin/api/skills/delete.php",
+          url: "https://rizkym.amisbudi.cloud/web-porto/si-admin/api/skills/delete.php",
           method: "DELETE",
           data: JSON.stringify({
             id: id,
@@ -453,51 +462,72 @@
       }
     }
 
-    $(document).ready(function() {
-      showAll();
 
-      function showAll() {
+    $(document).ready(function() {
+      // Fungsi untuk merubah full_name, job sesuai id serta mengambil user_id
+      getUserIDAndShowAll();
+
+      function getUserIDAndShowAll() {
         $.ajax({
           type: "GET",
           contentType: "application/json",
-          url: "http://localhost/web-porto/si-admin/api/users/read.php?id=17",
+          url: "https://rizkym.amisbudi.cloud/web-porto/si-admin/api/getUserID.php",
           success: function(response) {
-            $("#nama_lengkap").text(response.nama_lengkap); //mengubah elemen dengan .text dan .html
-            $("#pekerjaan").text(
-              response.pekerjaan + " | " + response.posisi
-            );
+            if (response.user_id) {
+              const userID = response.user_id;
+              showAll(userID);
+              fetchSkills(userID);
+            } else {
+              console.log(response.error);
+            }
           },
-          error: function(err) {},
+          error: function(err) {
+            console.log("Error fetching user ID", err);
+          }
         });
       }
-    });
-    $(document).ready(function() {
-      // fungsi untuk mengambil data and menampilkan skills diprogress bars
-      function fetchSkills() {
+
+      function showAll(userID) {
         $.ajax({
           type: "GET",
-          url: "http://localhost/web-porto/si-admin/api/skills/read.php",
+          contentType: "application/json",
+          url: "https://rizkym.amisbudi.cloud/web-porto/si-admin/api/users/read.php?id=" + userID,
+          success: function(response) {
+            $("#full_name").text(response.full_name);
+            $("#job").text(response.job + " | " + response.expected_position);
+
+          },
+          error: function(err) {
+            console.log("Error fetching user data", err);
+          }
+        });
+      }
+
+      // Fungsi untuk mengambil data dan menampilkan skills di progress bars sesuai user_id
+      function fetchSkills(userID) {
+        $.ajax({
+          type: "GET",
+          url: "https://rizkym.amisbudi.cloud/web-porto/si-admin/api/skills/read.php",
           success: function(response) {
             const skills = response.body;
+            // Filter skills sesuai dengan user_id
+            const filteredSkills = skills.filter(skill => skill.user_id === userID);
             let skillsHtmlColumn1 = '';
             let skillsHtmlColumn2 = '';
-
-            skills.forEach((skill, index) => {
+            filteredSkills.forEach((skill, index) => {
               const skillHtml = `
-            <div class="mb-3">
-              <h6>${skill.skill_name}</h6>
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: ${skill.rating}%" aria-valuenow="${skill.rating}" aria-valuemin="0" aria-valuemax="100">${skill.rating}%</div>
-              </div>
-            </div>`;
-
+                        <div class="mb-3">
+                            <h6>${skill.skill_name}</h6>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: ${skill.rating}%" aria-valuenow="${skill.rating}" aria-valuemin="0" aria-valuemax="100">${skill.rating}%</div>
+                            </div>
+                        </div>`;
               if (index % 2 === 0) {
                 skillsHtmlColumn1 += skillHtml;
               } else {
                 skillsHtmlColumn2 += skillHtml;
               }
             });
-
             $('#skills-column-1').html(skillsHtmlColumn1);
             $('#skills-column-2').html(skillsHtmlColumn2);
           },
@@ -506,33 +536,6 @@
           }
         });
       }
-
-      fetchSkills();
-      // fungsi mengambil data user_id ,skill_name dan rating dari Skills
-      function showAll() {
-        $.ajax({
-          type: "GET",
-          contentType: "application/json",
-          url: "http://localhost/web-porto/si-admin/api/skills/read.php?id=1",
-          success: function(response) {
-            var json = response.body;
-            var dataSet = [];
-            for (var i = 0; i < json.length; i++) {
-              var sub_array = {
-                user_id: json[i].user_id,
-                skill_name: json[i].skill_name,
-                rating: json[i].rating,
-              };
-              dataSet.push(sub_array);
-            }
-
-          },
-          error: function(err) {
-            console.log(err);
-          },
-        });
-      }
-      showAll();
     });
   </script>
 

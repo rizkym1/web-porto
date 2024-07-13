@@ -11,25 +11,34 @@
 </head>
 
 <body>
-    <div class="container">
-        <div id="message">
-        </div>
-        <div class="container px-4">
-            <form class="row g-1" id="sample_form">
-                <div class="col-md-6">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email">
+    <div class="form-login container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="container">
+            <div id="message">
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="sample_form">
+                                <h2 class="text-center my-4">Halaman Login</h2>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="pass" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100" id="action_button">Login</button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-md-6">
-                    <label for="pass" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password">
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary" id="action_button">Sign In</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
+
     <script>
         $(document).ready(function() {
 
@@ -41,12 +50,12 @@
                     'password': $('#password').val()
                 }
                 $.ajax({
-                    url: "http://localhost/web-porto/si-admin/api/auth/login.php",
+                    url: "https://rizkym.amisbudi.cloud/web-porto/si-admin/api/auth/login.php",
                     method: "POST",
                     data: JSON.stringify(formData),
                     success: function(data) {
                         $('#action_button').attr('disabled', false);
-                        window.location.href = 'http://localhost/web-porto/si-admin/views/users/';
+                        window.location.href = 'https://rizkym.amisbudi.cloud/web-porto/';
 
                     },
                     error: function(err) {

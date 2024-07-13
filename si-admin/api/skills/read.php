@@ -6,12 +6,12 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-AllowHeaders, Authorization, X-Requested-With");
 include_once '../../config/database.php';
 include_once '../../models/Skills.php';
-// session_start();
-// if (!isset($_SESSION['user'])) {
-//     http_response_code(404);
-//     echo json_encode("You are not log in.");
-//     return false;
-// }
+session_start();
+if (!isset($_SESSION['user'])) {
+    http_response_code(404);
+    echo json_encode("You are not log in.");
+    return false;
+}
 
 $database = new Database();
 $db = $database->getConnection();
@@ -46,10 +46,10 @@ if (isset($_GET['id'])) {
             extract($row);
             $e = array(
                 "id"           => $id,
-                "user_id" => $user_id,
-                "skill_name"        => $skill_name,
-                "rating"     => $rating,
-                "description"         => $description,
+                "user_id"      => $user_id,
+                "skill_name"   => $skill_name,
+                "rating"       => $rating,
+                "description"  => $description,
             );
             array_push($UserArr["body"], $e);
         }
